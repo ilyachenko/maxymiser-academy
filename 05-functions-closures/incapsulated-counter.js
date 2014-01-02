@@ -8,3 +8,48 @@
  Вызов метода get() возвращает текущее значение счетчика.
  */
 
+function createSummator(initialValue) {
+    var count = 0;
+    if (initialValue){
+        count = initialValue;
+    }
+    var obj = {
+        inc: function(num){
+            if (num){
+                count += num;
+            }
+            else{
+                count++;
+            }
+        },
+        dec: function(num){
+          if (num){
+              count -= num;
+          }
+            else {
+              count--;
+          }
+        },
+        get: function(){
+            return count;
+        }
+    }
+    return obj;
+}
+
+var s1 = createSummator();
+s1.inc();
+s1.inc();
+s1.inc();
+console.log(s1.get()); // 3
+
+var s2 = createSummator(10);
+s2.inc(2);
+s2.inc(3);
+s2.inc(4);
+console.log(s2.get()); // 19
+
+var s3 = createSummator(5);
+s3.inc(5);
+s3.dec(10);
+console.log(s3.get()); // 0
