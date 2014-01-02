@@ -11,14 +11,30 @@
 
 function createKeeper() {
     'use strict';
+    var index = 0;
+    var storage = [];
+
     var obj = {
         put: function(key, value) {
-            this.storage[key] = value;
+            //пройдёся по всему массиву чтобы узнать, есть ли такой ключ
+            for (var i=0; i<storage.length; i++){
+                if (storage[i][0] === key){
+                    //если есть - сохраним туда значение
+                    storage[i][1] = value;
+                    return storage[i][1];
+                }
+            }
+            storage[index] = [key, value];
+            index++;
         },
         get: function(key) {
-
-        },
-        storage: {}
+            for (var i=0; i<storage.length; i++){
+                if (storage[i][0] === key){
+                    return storage[i][1];
+                }
+            }
+            return null;
+        }
     };
     return obj;
 }
@@ -30,9 +46,9 @@ var key1Copy = key1;
 
 keeper.put(key1, 999)
 keeper.put(key2, [1,2,3])
-//console.log(keeper.get(key1)); // 999
-//console.log(keeper.get(key2)); // [1,2,3]
-//console.log(keeper.get(key1Copy)); // 999
-//console.log(keeper.get({})); // null
-//keeper.put(key1, key2);
-//console.log(keeper.get(key1Copy) === key2); // true
+console.log(keeper.get(key1)); // 999
+console.log(keeper.get(key2)); // [1,2,3]
+console.log(keeper.get(key1Copy)); // 999
+console.log(keeper.get({})); // null
+keeper.put(key1, key2);
+console.log(keeper.get(key1Copy) === key2); // true
