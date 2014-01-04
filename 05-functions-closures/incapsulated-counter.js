@@ -9,11 +9,10 @@
  */
 
 function createSummator(initialValue) {
-    var count = 0;
-    if (initialValue){
-        count = initialValue;
-    }
-    var obj = {
+    'use strict';
+    var count = initialValue || 0;
+
+    return {
         inc: function(num){
             if (num){
                 count += num;
@@ -34,7 +33,6 @@ function createSummator(initialValue) {
             return count;
         }
     }
-    return obj;
 }
 
 var s1 = createSummator();
