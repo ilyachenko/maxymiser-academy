@@ -14,20 +14,10 @@ function createSummator(initialValue) {
 
     return {
         inc: function(num){
-            if (num){
-                count += num;
-            }
-            else{
-                count++;
-            }
+            count += (num === undefined) ? 1 :  num;
         },
         dec: function(num){
-          if (num){
-              count -= num;
-          }
-            else {
-              count--;
-          }
+            count -= (num === undefined) ? 1 : num;
         },
         get: function(){
             return count;
