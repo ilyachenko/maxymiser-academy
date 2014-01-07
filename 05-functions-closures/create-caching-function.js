@@ -6,14 +6,41 @@
  */
 
 function createCachable(func) {
-    var cache = null;
-    return function(){
-        if (cache){
-            return cache;
+    'use strict';
+    var keeper = createKeeper();
+    function createKeeper() {
+        var storage = [];
+        return {
+            put: function(key, value) {
+                for (var i=0; i<storage.length; i++){
+                    if (storage[i][0] === key){
+                        //если есть - сохраним туда значение
+                        storage[i][1] = value;
+                        return storage[i][1];
+                    }
+                }
+                storage.push([key, value]);
+                return null;
+            },
+            get: function(key) {
+                for (var i=0; i<storage.length; i++){
+                    if (storage[i][0] === key){
+                        return storage[i][1];
+                    }
+                }
+                return null;
+            }
+        };
+    }
+
+    return function(arg) {
+        if (keeper.get(arg) !== null){
+            return keeper.get(arg);
         }
         else {
-            cache = func(arguments[0]);
-            return cache;
+            var res = func(arg);
+            keeper.put(arg, res);
+            return res;
         }
     };
 }
@@ -34,4 +61,8 @@ console.log(cachableMultiplier(10));
 // Последующие вызовы с тем-же аргументом моментальны
 console.log(cachableMultiplier(10));
 console.log(cachableMultiplier(10));
+console.log(cachableMultiplier(10));
+console.log(cachableMultiplier(20));
+console.log(cachableMultiplier(20));
+console.log(cachableMultiplier(20));
 console.log(cachableMultiplier(10));
