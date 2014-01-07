@@ -11,19 +11,18 @@ var a = {};
 var b = {};
 
 var u = getUnique([a,b,b,a]);
+//var u = getUnique([3,2,2,1,3,4]);
+//var u = getUnique({0: "test", 1: "foo", 2: "test", length: 3});
 console.log(u[0] === a); // true
 console.log(u[1] === b); // true
 console.log(u.length === 2); // true
-var u = getUnique([3,2,2,1,3,4]);
-var u = getUnique({0: "test", 1: "foo", 2: "test", length: 3});
 
 function getUnique(arr) {
-    var count = 0;
+    'use strict';
     var newArr = [];
     for (var i=0; i<arr.length; i++){
         if (newArr.indexOf(arr[i]) === -1){ //проверяем уникальность
-            newArr[count] = arr[i];
-            count++;
+            newArr.push(arr[i]);
         }
     }
     return newArr;
