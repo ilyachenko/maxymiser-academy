@@ -11,12 +11,9 @@
 
 function createKeeper() {
     'use strict';
-    var index = 0;
     var storage = [];
-
-    var obj = {
+    return {
         put: function(key, value) {
-            //пройдёся по всему массиву чтобы узнать, есть ли такой ключ
             for (var i=0; i<storage.length; i++){
                 if (storage[i][0] === key){
                     //если есть - сохраним туда значение
@@ -24,8 +21,8 @@ function createKeeper() {
                     return storage[i][1];
                 }
             }
-            storage[index] = [key, value];
-            index++;
+            storage.push([key, value]);
+            return null;
         },
         get: function(key) {
             for (var i=0; i<storage.length; i++){
@@ -36,7 +33,6 @@ function createKeeper() {
             return null;
         }
     };
-    return obj;
 }
 
 var keeper = createKeeper();
