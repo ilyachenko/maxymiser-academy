@@ -45,20 +45,36 @@ var dom = {
 };
 
 var validator = {
-    init: function (nodes) {
-        validator.requiredNodes = nodes;
+    form: {},
+    init: function (form) {
+        this.form = form;
+        //var require_nodes = document.getElementsByClassName("required");
+        var nodes = document.getElementsByClassName("required");
         for (var i = 0; i < nodes.length; i++) {
             var input = nodes[i].getElementsByTagName('input')[0];
             switch (input.type) { //email , password , checkbox
                 case "email":
                     dom.addEvent(input, 'blur', validator.validateMail);
+                    dom.addEvent(input, 'keydown', validator.checkInput);
                     break;
                 case "password":
                     dom.addEvent(input, 'blur', validator.validatePassword);
+                    dom.addEvent(input, 'keydown', validator.checkInput);
                     break;
                 case "checkbox":
                     dom.addEvent(input, 'click', validator.validateCheckbox);
                     break;
+            }
+        }
+    },
+    checkInput: function(){
+        var nodeDiv = this.parentElement;
+        if (nodeDiv.getElementsByClassName("alert alert-danger").length > 0){
+            if (this.type === "password"){
+                validator.validatePassword.apply(this);
+            }
+            else if(this.type === "email"){
+                validator.validateMail.apply(this);
             }
         }
     },
@@ -83,9 +99,7 @@ var validator = {
         validator.checkBtn(this);
     },
     validateCheckbox: function() {
-          if(this.checked){
-              validator.checkBtn(this);
-          }
+          validator.checkBtn(this);
     },
     initAlert: function (node, str) {
         dom.addClass(node.parentElement, "has-error");
@@ -102,14 +116,13 @@ var validator = {
         }
     },
     checkBtn: function(node) {
-        var form = node.parentElement.parentElement;
-        debugger
+        var form = this.form;
         var btn = form.getElementsByClassName("btn btn-primary")[0];
         var checked = false;
-        var nodes = validator.requiredNodes;
+        var nodes = form.getElementsByClassName("required");
         for(var i=0; i<nodes.length;i++){
             var node = nodes[i].getElementsByTagName("input")[0];
-            if ((node.type === "text" || node.type === "email") && node.value.length === 0){
+            if ((node.type === "password" || node.type === "email") && node.value.length === 0){
                 break;
             }
             else if (node.type === "checkbox"){
@@ -131,8 +144,8 @@ var validator = {
 
 (function () {
 
-    var require_nodes = document.getElementsByClassName("required");
-    validator.init(require_nodes);
+    var form = document.getElementsByTagName("form")[0];
+    validator.init(form);
 
 
 })();
