@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Zoomer</title>
+	<link rel="stylesheet" href="css/slider.css">
+</head>
+<body>
+
+<div id="slider1">
+    <div class="wrapper">
+        <div class="block active" data-id="0">
+
+        </div>
+        <div class="block" data-id="1">
+
+        </div>
+        <div class="block" data-id="2">
+
+        </div>
+        <div class="block" data-id="3">
+
+        </div>
+    </div>
+    <div class="slider">
+        <ul>
+            <li>
+                <img src="img/image1.jpg">
+            </li>
+            <li>
+                <img src="img/image2.jpg">
+            </li>
+            <li>
+                <img src="img/image3.jpg">
+            </li>
+            <li>
+                <img src="img/image4.jpg">
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/slider.js"></script>
+<script>
+    (function($){
+        $(function(){
+            var slider = new Slider($('#slider1'), 2000, 4000);
+        });
+    })(jQuery);
+</script>
+</body>
+</html>
